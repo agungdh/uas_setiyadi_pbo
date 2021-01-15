@@ -5,10 +5,13 @@
  */
 package uassetiyadipbo;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -27,6 +30,28 @@ public class FormPeminjaman extends javax.swing.JFrame {
         initComponents();
         
         this.getAllPeminjam();
+        
+        Peminjam peminjam = new Peminjam();
+        List<Peminjam> peminjams = peminjam.getAll();
+        for (Peminjam peminjamList : peminjams) {
+            comboBuku.addItem(peminjamList.getKode());            
+        }
+        
+        Buku buku = new Buku();
+        List<Buku> bukus = buku.getAll();
+        for (Buku bukuList : bukus) {
+            comboPeminjam.addItem(bukuList.getKode());            
+        }
+        
+        comboPeminjam.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent arg0) {
+                Peminjam peminjam = new Peminjam();
+                peminjam.setKode(comboPeminjam.getSelectedItem().toString());
+                peminjam.get();
+
+                textNamaPeminjam.setText(peminjam.getNama());
+            }
+        });
     }
     
     public void getAllPeminjam()
@@ -101,6 +126,11 @@ public class FormPeminjaman extends javax.swing.JFrame {
         jLabel3.setText("Nama Peminjam");
 
         textNamaPeminjam.setEnabled(false);
+        textNamaPeminjam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textNamaPeminjamActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -172,9 +202,11 @@ public class FormPeminjaman extends javax.swing.JFrame {
 
         jLabel12.setText("(Format: YYYY-MM-DD) (2021-12-01)");
 
-        comboPeminjam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        comboBuku.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboPeminjam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboPeminjamActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -310,7 +342,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Peminjam peminjam = new Peminjam();
         
-        peminjam.setKode(textKodePeminjam.getText());
+//        peminjam.setKode(textKodePeminjam.getText());
         peminjam.setNama(textNamaPeminjam.getText());
         
         peminjam.tambah();
@@ -321,7 +353,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Peminjam peminjam = new Peminjam();
         
-        peminjam.setKode(textKodePeminjam.getText());
+//        peminjam.setKode(textKodePeminjam.getText());
         
         peminjam.hapus();
         
@@ -330,10 +362,10 @@ public class FormPeminjaman extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Peminjam peminjam = new Peminjam();
-        peminjam.setKode(textKodePeminjam.getText());
+//        peminjam.setKode(textKodePeminjam.getText());
         peminjam.get();
         
-        peminjam.setKode(textKodePeminjam.getText());
+//        peminjam.setKode(textKodePeminjam.getText());
         peminjam.setNama(textNamaPeminjam.getText());
         
         peminjam.ubah();
@@ -356,9 +388,17 @@ public class FormPeminjaman extends javax.swing.JFrame {
         
         int selectedRowIndex = jTable1.getSelectedRow();
         
-       textKodePeminjam.setText(model.getValueAt(selectedRowIndex, 0).toString());
+//       textKodePeminjam.setText(model.getValueAt(selectedRowIndex, 0).toString());
        textNamaPeminjam.setText(model.getValueAt(selectedRowIndex, 1).toString());
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void comboPeminjamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeminjamActionPerformed
+        
+    }//GEN-LAST:event_comboPeminjamActionPerformed
+
+    private void textNamaPeminjamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNamaPeminjamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textNamaPeminjamActionPerformed
 
     /**
      * @param args the command line arguments
