@@ -19,64 +19,67 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        
+        this.testGetBuku();
     }
     
     public void testHapusBuku()
     {
-        Buku buku = new Buku();
-        buku.get("BKU01");
-        
-        if (buku.getSuccess()) {
-            buku.hapus();
-        } else {
-            System.out.println("Nah");
-        }
+//        Buku buku = new Buku();
+//        buku.get("BKU01");
+//        
+//        if (buku.getSuccess()) {
+//            buku.hapus();
+//        } else {
+//            System.out.println("Nah");
+//        }
     }
     
     public void testUbahBuku()
     {
-        Buku buku = new Buku();
-        buku.get("BKU01");
-        
-        if (buku.getSuccess()) {
-            buku.setPenulis("Sandri Setiyadi");
-            buku.setPenerbit("STMIK Dharma Wacana");
-            buku.ubah();
-        } else {
-            System.out.println("Nah");
-        }
+//        Buku buku = new Buku();
+//        buku.get("BKU01");
+//        
+//        if (buku.getSuccess()) {
+//            buku.setPenulis("Sandri Setiyadi");
+//            buku.setPenerbit("STMIK Dharma Wacana");
+//            buku.ubah();
+//        } else {
+//            System.out.println("Nah");
+//        }
     }
     
     public void testTambahBuku()
     {
-        Buku buku = new Buku();
-        
-        buku.setKode("BKU01");
-        buku.setJudul("Test 123");
-        buku.setPenulis("Agung DH");
-        buku.setPenerbit("Gramed");
-        
-        buku.tambah();
+//        Buku buku = new Buku();
+//        
+//        buku.setKode("BKU01");
+//        buku.setJudul("Test 123");
+//        buku.setPenulis("Agung DH");
+//        buku.setPenerbit("Gramed");
+//        
+//        buku.tambah();
     }
     
     public void testGetAllBuku()
     {
-        Buku buku = new Buku();
-        List<Buku> bukus = buku.getAll();
-        
-        if (buku.getSuccess()) {
-            for (Buku bukuList : bukus) {
-                System.out.println(bukuList.getJudul());
-            }
-        } else {
-            System.out.println("Nah");
-        }
+//        Buku buku = new Buku();
+//        List<Buku> bukus = buku.getAll();
+//        
+//        if (buku.getSuccess()) {
+//            for (Buku bukuList : bukus) {
+//                System.out.println(bukuList.getJudul());
+//            }
+//        } else {
+//            System.out.println("Nah");
+//        }
     }
     
     public void testGetBuku()
     {
         Buku buku = new Buku();
-        buku.get("PBO1");
+        buku.setKode("PBO1");
+        buku.get();
         
         if (buku.getSuccess()) {
             System.out.println(buku.getKode());

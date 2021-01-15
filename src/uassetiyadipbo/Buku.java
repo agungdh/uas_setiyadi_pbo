@@ -117,13 +117,13 @@ public class Buku {
         return bukus;
     }
     
-    public void get(String kode)
+    public void get()
     {
         this.getSuccess = false;
         
         Connection conn = Konektor.init();
         
-        String sql = "SELECT * FROM buku WHERE kode = '" + kode + "'";
+        String sql = "SELECT * FROM buku WHERE kode = '" + this.kode + "'";
 
         try {
             stmt = conn.createStatement();
