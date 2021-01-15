@@ -8,6 +8,8 @@ package uassetiyadipbo;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,6 +26,39 @@ public class Buku {
     static ResultSet rs;
     
     private boolean getSuccess;
+    
+    public List<Buku> getAll()
+    {
+        List<Buku> bukus = new ArrayList<Buku> ();
+        
+        this.getSuccess = false;
+        
+        Connection conn = Konektor.init();
+        
+        String sql = "SELECT * FROM buku";
+
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                Buku tempBuku = new Buku();
+                
+                tempBuku.setKode(rs.getString("kode"));
+                tempBuku.setJudul(rs.getString("judul"));
+                tempBuku.setPenulis(rs.getString("Penulis"));
+                tempBuku.setPenerbit(rs.getString("Penerbit"));
+                
+                bukus.add(tempBuku);
+            }
+            
+            this.getSuccess = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return bukus;
+    }
     
     public void get(String kode)
     {

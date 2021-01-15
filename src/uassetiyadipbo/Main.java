@@ -5,6 +5,9 @@
  */
 package uassetiyadipbo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author asus
@@ -17,6 +20,25 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         
+        this.testGetAllBuku();
+    }
+    
+    public void testGetAllBuku()
+    {
+        Buku buku = new Buku();
+        List<Buku> bukus = buku.getAll();
+        
+        if (buku.getSuccess()) {
+            for (Buku bukuList : bukus) {
+                System.out.println(bukuList.getJudul());
+            }
+        } else {
+            System.out.println("Nah");
+        }
+    }
+    
+    public void testGetBuku()
+    {
         Buku buku = new Buku();
         buku.get("PBO1");
         
@@ -28,8 +50,6 @@ public class Main extends javax.swing.JFrame {
         } else {
             System.out.println("Nah");
         }
-        
-        
     }
 
     /**
