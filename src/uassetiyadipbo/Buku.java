@@ -27,6 +27,63 @@ public class Buku {
     
     private boolean getSuccess;
     
+    public void tambah()
+    {
+        this.getSuccess = false;
+        
+        Connection conn = Konektor.init();
+        
+        String sql = "INSERT INTO buku (kode,judul,penulis,penerbit) VALUES ('"+this.kode+"', '"+this.judul+"', '"+this.penulis+"', '"+this.penerbit+"')";
+
+        try {
+            stmt = conn.createStatement();
+            stmt.execute(sql);
+            
+            this.getSuccess = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void hapus()
+    {
+        this.getSuccess = false;
+        
+        Connection conn = Konektor.init();
+        
+        String sql = "DELETE FROM buku WHERE kode = '"+this.kode+"'";
+
+        try {
+            stmt = conn.createStatement();
+            stmt.execute(sql);
+            
+            this.getSuccess = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void ubah()
+    {
+        this.getSuccess = false;
+        
+        Connection conn = Konektor.init();
+        
+        String sql = "UPDATE buku SET kode = '"+this.kode+"', judul = '"+this.judul+"', penulis = '"+this.penulis+"', penerbit = '"+this.penerbit+"' WHERE kode = '"+this.kode+"'";
+
+        try {
+            stmt = conn.createStatement();
+            stmt.execute(sql);
+            
+            this.getSuccess = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public List<Buku> getAll()
     {
         List<Buku> bukus = new ArrayList<Buku> ();

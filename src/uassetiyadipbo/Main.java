@@ -19,8 +19,44 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+    }
+    
+    public void testHapusBuku()
+    {
+        Buku buku = new Buku();
+        buku.get("BKU01");
         
-        this.testGetAllBuku();
+        if (buku.getSuccess()) {
+            buku.hapus();
+        } else {
+            System.out.println("Nah");
+        }
+    }
+    
+    public void testUbahBuku()
+    {
+        Buku buku = new Buku();
+        buku.get("BKU01");
+        
+        if (buku.getSuccess()) {
+            buku.setPenulis("Sandri Setiyadi");
+            buku.setPenerbit("STMIK Dharma Wacana");
+            buku.ubah();
+        } else {
+            System.out.println("Nah");
+        }
+    }
+    
+    public void testTambahBuku()
+    {
+        Buku buku = new Buku();
+        
+        buku.setKode("BKU01");
+        buku.setJudul("Test 123");
+        buku.setPenulis("Agung DH");
+        buku.setPenerbit("Gramed");
+        
+        buku.tambah();
     }
     
     public void testGetAllBuku()
