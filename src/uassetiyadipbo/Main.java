@@ -19,76 +19,6 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        
-        this.testGetBuku();
-    }
-    
-    public void testHapusBuku()
-    {
-//        Buku buku = new Buku();
-//        buku.get("BKU01");
-//        
-//        if (buku.getSuccess()) {
-//            buku.hapus();
-//        } else {
-//            System.out.println("Nah");
-//        }
-    }
-    
-    public void testUbahBuku()
-    {
-//        Buku buku = new Buku();
-//        buku.get("BKU01");
-//        
-//        if (buku.getSuccess()) {
-//            buku.setPenulis("Sandri Setiyadi");
-//            buku.setPenerbit("STMIK Dharma Wacana");
-//            buku.ubah();
-//        } else {
-//            System.out.println("Nah");
-//        }
-    }
-    
-    public void testTambahBuku()
-    {
-//        Buku buku = new Buku();
-//        
-//        buku.setKode("BKU01");
-//        buku.setJudul("Test 123");
-//        buku.setPenulis("Agung DH");
-//        buku.setPenerbit("Gramed");
-//        
-//        buku.tambah();
-    }
-    
-    public void testGetAllBuku()
-    {
-//        Buku buku = new Buku();
-//        List<Buku> bukus = buku.getAll();
-//        
-//        if (buku.getSuccess()) {
-//            for (Buku bukuList : bukus) {
-//                System.out.println(bukuList.getJudul());
-//            }
-//        } else {
-//            System.out.println("Nah");
-//        }
-    }
-    
-    public void testGetBuku()
-    {
-        Buku buku = new Buku();
-        buku.setKode("PBO1");
-        buku.get();
-        
-        if (buku.getSuccess()) {
-            System.out.println(buku.getKode());
-            System.out.println(buku.getJudul());
-            System.out.println(buku.getPenulis());
-            System.out.println(buku.getPenerbit());
-        } else {
-            System.out.println("Nah");
-        }
     }
 
     /**
@@ -113,6 +43,11 @@ public class Main extends javax.swing.JFrame {
         jButton1.setText("Data Peminjam");
 
         jButton2.setText("Data Buku");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Peminjaman Buku");
 
@@ -157,6 +92,12 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new FormBuku().setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
