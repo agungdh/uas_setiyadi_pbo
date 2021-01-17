@@ -5,6 +5,8 @@
  */
 package uassetiyadipbo;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.ParseException;
@@ -29,44 +31,86 @@ public class FormPeminjaman extends javax.swing.JFrame {
     public FormPeminjaman() {
         initComponents();
         
-        this.getAllPeminjam();
+        this.getAllPeminjaman();
         
         Peminjam peminjam = new Peminjam();
         List<Peminjam> peminjams = peminjam.getAll();
         for (Peminjam peminjamList : peminjams) {
-            comboBuku.addItem(peminjamList.getKode());            
+            comboPeminjam.addItem(peminjamList.getKode());            
+        }
+        
+        if (comboPeminjam.getSelectedIndex() >= 0)
+        {
+            syncComboPeminjam();
         }
         
         Buku buku = new Buku();
         List<Buku> bukus = buku.getAll();
         for (Buku bukuList : bukus) {
-            comboPeminjam.addItem(bukuList.getKode());            
+            comboBuku.addItem(bukuList.getKode());            
+        }
+        
+        if (comboBuku.getSelectedIndex() >= 0)
+        {
+            syncComboBuku();
         }
         
         comboPeminjam.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent arg0) {
-                Peminjam peminjam = new Peminjam();
-                peminjam.setKode(comboPeminjam.getSelectedItem().toString());
-                peminjam.get();
-
-                textNamaPeminjam.setText(peminjam.getNama());
+                syncComboPeminjam();
             }
         });
+        
+        comboBuku.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent arg0) {
+                syncComboBuku();
+            }
+        });
+
     }
     
-    public void getAllPeminjam()
+    private void syncComboBuku()
+    {
+        Buku buku = new Buku();
+        buku.setKode(comboBuku.getSelectedItem().toString());
+        buku.get();
+
+        textJudulBuku.setText(buku.getJudul());
+        textPenulisBuku.setText(buku.getPenulis());
+        textPenerbitBuku.setText(buku.getPenerbit());
+    }
+    
+    private void syncComboPeminjam()
+    {
+        Peminjam peminjam = new Peminjam();
+        peminjam.setKode(comboPeminjam.getSelectedItem().toString());
+        peminjam.get();
+
+        textNamaPeminjam.setText(peminjam.getNama());
+    }
+    
+    public void getAllPeminjaman()
     {
         DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("#ID");
         model.addColumn("Kode Peminjam");
         model.addColumn("Nama Peminjam");
+        model.addColumn("Kode Buku");
+        model.addColumn("Judul Buku");
+        model.addColumn("Tanggal");
         
-        Peminjam peminjam = new Peminjam();
-        List<Peminjam> peminjams = peminjam.getAll();
         
-        for (Peminjam peminjamList : peminjams) {
+        Peminjaman peminjaman = new Peminjaman();
+        List<Peminjaman> peminjamans = peminjaman.getAll();
+        
+        for (Peminjaman peminjamanList : peminjamans) {
             model.addRow(new Object[]{
-                peminjamList.getKode(),
-                peminjamList.getNama(),
+                peminjamanList.getId(),
+                peminjamanList.getPeminjam().getKode(),
+                peminjamanList.getPeminjam().getNama(),
+                peminjamanList.getBuku().getKode(),
+                peminjamanList.getBuku().getJudul(),
+                peminjamanList.getTanggal(),
             });
         }
         
@@ -109,6 +153,8 @@ public class FormPeminjaman extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         comboPeminjam = new javax.swing.JComboBox<>();
         comboBuku = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        textId = new javax.swing.JTextField();
 
         jScrollPane2.setViewportView(jEditorPane1);
 
@@ -208,6 +254,10 @@ public class FormPeminjaman extends javax.swing.JFrame {
             }
         });
 
+        jLabel13.setText("#ID");
+
+        textId.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -236,47 +286,56 @@ public class FormPeminjaman extends javax.swing.JFrame {
                 .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                        .addComponent(jLabel10)
+                        .addGap(0, 677, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textId, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel12))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(textTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel11))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(textNamaPeminjam, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                                    .addComponent(textTanggal)
-                                    .addComponent(comboPeminjam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel3))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(textNamaPeminjam, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                                            .addComponent(comboPeminjam, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(comboBuku, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(textJudulBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textPenerbitBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textPenulisBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(72, 72, 72))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel12))
-                            .addComponent(jLabel10))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(jLabel7)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel5))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(comboBuku, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(textJudulBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(textPenerbitBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(textPenulisBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(72, 72, 72))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,22 +376,28 @@ public class FormPeminjaman extends javax.swing.JFrame {
                             .addComponent(textJudulBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(textTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(textId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(textTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)))
                 .addContainerGap())
         );
 
@@ -340,14 +405,23 @@ public class FormPeminjaman extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Peminjaman peminjaman = new Peminjaman();
+        
         Peminjam peminjam = new Peminjam();
+        peminjam.setKode(comboPeminjam.getSelectedItem().toString());
+        peminjam.get();
         
-//        peminjam.setKode(textKodePeminjam.getText());
-        peminjam.setNama(textNamaPeminjam.getText());
+        Buku buku = new Buku();
+        buku.setKode(comboBuku.getSelectedItem().toString());
+        buku.get();
+
+        peminjaman.setPeminjam(peminjam);
+        peminjaman.setBuku(buku);
+        peminjaman.setTanggal(textTanggal.getText());
         
-        peminjam.tambah();
+        peminjaman.tambah();
         
-        this.getAllPeminjam();
+        this.getAllPeminjaman();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -357,7 +431,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
         
         peminjam.hapus();
         
-        this.getAllPeminjam();
+        this.getAllPeminjaman();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -370,7 +444,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
         
         peminjam.ubah();
         
-        this.getAllPeminjam();
+        this.getAllPeminjaman();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -388,8 +462,17 @@ public class FormPeminjaman extends javax.swing.JFrame {
         
         int selectedRowIndex = jTable1.getSelectedRow();
         
-//       textKodePeminjam.setText(model.getValueAt(selectedRowIndex, 0).toString());
-       textNamaPeminjam.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        Peminjaman peminjaman = new Peminjaman();
+        peminjaman.setId(Integer.valueOf(model.getValueAt(selectedRowIndex, 0).toString()));
+        peminjaman.get();
+                
+        textId.setText(String.valueOf(peminjaman.getId()));
+        
+        comboPeminjam.setSelectedItem(peminjaman.getPeminjam().getKode().toString());
+        comboPeminjam.updateUI();
+                
+        comboBuku.setSelectedItem(peminjaman.getBuku().getKode().toString());
+        comboBuku.updateUI();
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void comboPeminjamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboPeminjamActionPerformed
@@ -450,6 +533,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -461,6 +545,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField textId;
     private javax.swing.JTextField textJudulBuku;
     private javax.swing.JTextField textNamaPeminjam;
     private javax.swing.JTextField textPenerbitBuku;

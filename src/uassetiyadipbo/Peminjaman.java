@@ -27,26 +27,26 @@ public class Peminjaman {
     static ResultSet rs;
     
     private boolean getSuccess;
-//    
-//    public void tambah()
-//    {
-//        this.getSuccess = false;
-//        
-//        Connection conn = Konektor.init();
-//        
-//        String sql = "INSERT INTO peminjam (kode,nama) VALUES ('"+this.kode+"', '"+this.nama+"')";
-//
-//        try {
-//            stmt = conn.createStatement();
-//            stmt.execute(sql);
-//            
-//            this.getSuccess = true;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//    
+    
+    public void tambah()
+    {
+        this.getSuccess = false;
+        
+        Connection conn = Konektor.init();
+        
+        String sql = "INSERT INTO peminjaman (kode_peminjam,kode_buku,tanggal) VALUES ('"+this.peminjam.getKode()+"', '"+this.buku.getKode()+"', '"+this.tanggal+"')";
+
+        try {
+            stmt = conn.createStatement();
+            stmt.execute(sql);
+            
+            this.getSuccess = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 //    public void hapus()
 //    {
 //        this.getSuccess = false;
