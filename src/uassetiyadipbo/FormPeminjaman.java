@@ -425,24 +425,33 @@ public class FormPeminjaman extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Peminjam peminjam = new Peminjam();
+        Peminjaman peminjaman = new Peminjaman();
         
-//        peminjam.setKode(textKodePeminjam.getText());
+        peminjaman.setId(Integer.valueOf(textId.getText()));
         
-        peminjam.hapus();
+        peminjaman.hapus();
         
         this.getAllPeminjaman();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Peminjaman peminjaman = new Peminjaman();
+        peminjaman.setId(Integer.valueOf(textId.getText()));
+        peminjaman.get();
+        
         Peminjam peminjam = new Peminjam();
-//        peminjam.setKode(textKodePeminjam.getText());
+        peminjam.setKode(comboPeminjam.getSelectedItem().toString());
         peminjam.get();
         
-//        peminjam.setKode(textKodePeminjam.getText());
-        peminjam.setNama(textNamaPeminjam.getText());
+        Buku buku = new Buku();
+        buku.setKode(comboBuku.getSelectedItem().toString());
+        buku.get();
+
+        peminjaman.setPeminjam(peminjam);
+        peminjaman.setBuku(buku);
+        peminjaman.setTanggal(textTanggal.getText());
         
-        peminjam.ubah();
+        peminjaman.ubah();
         
         this.getAllPeminjaman();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -467,6 +476,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
         peminjaman.get();
                 
         textId.setText(String.valueOf(peminjaman.getId()));
+        textTanggal.setText(String.valueOf(peminjaman.getTanggal()));
         
         comboPeminjam.setSelectedItem(peminjaman.getPeminjam().getKode().toString());
         comboPeminjam.updateUI();

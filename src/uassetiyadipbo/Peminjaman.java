@@ -47,44 +47,44 @@ public class Peminjaman {
         }
     }
     
-//    public void hapus()
-//    {
-//        this.getSuccess = false;
-//        
-//        Connection conn = Konektor.init();
-//        
-//        String sql = "DELETE FROM peminjam WHERE kode = '"+this.kode+"'";
-//
-//        try {
-//            stmt = conn.createStatement();
-//            stmt.execute(sql);
-//            
-//            this.getSuccess = true;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//    
-//    public void ubah()
-//    {
-//        this.getSuccess = false;
-//        
-//        Connection conn = Konektor.init();
-//        
-//        String sql = "UPDATE peminjam SET kode = '"+this.kode+"', nama = '"+this.nama+"' WHERE kode = '"+this.kode+"'";
-//
-//        try {
-//            stmt = conn.createStatement();
-//            stmt.execute(sql);
-//            
-//            this.getSuccess = true;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//    
+    public void hapus()
+    {
+        this.getSuccess = false;
+        
+        Connection conn = Konektor.init();
+        
+        String sql = "DELETE FROM peminjaman WHERE id = '"+this.id+"'";
+
+        try {
+            stmt = conn.createStatement();
+            stmt.execute(sql);
+            
+            this.getSuccess = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void ubah()
+    {
+        this.getSuccess = false;
+        
+        Connection conn = Konektor.init();
+        
+        String sql = "UPDATE peminjaman SET kode_peminjam = '"+this.peminjam.getKode()+"', kode_buku = '"+this.buku.getKode()+"' WHERE id = '"+this.id+"'";
+
+        try {
+            stmt = conn.createStatement();
+            stmt.execute(sql);
+            
+            this.getSuccess = true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public List<Peminjaman> getAll()
     {
         List<Peminjaman> peminjamans = new ArrayList<Peminjaman> ();
