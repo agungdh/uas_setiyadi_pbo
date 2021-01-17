@@ -62,6 +62,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         jButton4.setText("Pengembalian Buku");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,6 +125,12 @@ public class Main extends javax.swing.JFrame {
         
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        new FormPengembalian().setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

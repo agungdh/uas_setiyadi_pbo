@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2021 at 01:12 AM
+-- Generation Time: Jan 17, 2021 at 09:23 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.25
 
@@ -53,6 +53,16 @@ CREATE TABLE `peminjam` (
   `nama` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `peminjam`
+--
+
+INSERT INTO `peminjam` (`kode`, `nama`) VALUES
+('11', 'Say'),
+('11 2', 'Say dd'),
+('11 2 3', 'Say dd 4'),
+('2', '44');
+
 -- --------------------------------------------------------
 
 --
@@ -66,6 +76,20 @@ CREATE TABLE `peminjaman` (
   `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `peminjaman`
+--
+
+INSERT INTO `peminjaman` (`id`, `kode_peminjam`, `kode_buku`, `tanggal`) VALUES
+(1, '11', 'PBO1', '2021-12-31'),
+(2, '11 2', 'PBO1', '2021-12-31'),
+(4, '11 2', 'PBO1', '2021-12-31'),
+(6, '11 2', 'PBO1', '2021-12-31'),
+(7, '11 2', 'PBO1', '2021-12-31'),
+(8, '11 2', 'PBO2', '2021-12-31'),
+(11, '11 2', 'PBO1', '2020-12-14'),
+(12, '11 2', 'PBO1', '2021-12-31');
+
 -- --------------------------------------------------------
 
 --
@@ -78,6 +102,17 @@ CREATE TABLE `pengembalian` (
   `kode_buku` varchar(5) NOT NULL,
   `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pengembalian`
+--
+
+INSERT INTO `pengembalian` (`id`, `kode_peminjam`, `kode_buku`, `tanggal`) VALUES
+(1, '11', 'PBO1', '2020-12-16'),
+(2, '11 2 3', 'PBO2', '2020-12-16'),
+(4, '11', 'PBO2', '2020-12-16'),
+(5, '2', 'PBO1', '2020-12-16'),
+(6, '11', 'PBO1', '2020-12-16');
 
 --
 -- Indexes for dumped tables
@@ -119,13 +154,13 @@ ALTER TABLE `pengembalian`
 -- AUTO_INCREMENT for table `peminjaman`
 --
 ALTER TABLE `peminjaman`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `pengembalian`
 --
 ALTER TABLE `pengembalian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
